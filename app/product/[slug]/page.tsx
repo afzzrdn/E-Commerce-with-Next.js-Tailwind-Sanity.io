@@ -90,7 +90,6 @@ export default async function ProductPage({params}: {params: {slug: string}}) {
                                 key={data._id}
                                 price_id={data.price_id}
                             />
-                            <Button variant={"secondary"}>Checkout Now</Button>
                         </div>
 
                         <p className="mt-12 text-base text-gray-500 tracking-wide">
