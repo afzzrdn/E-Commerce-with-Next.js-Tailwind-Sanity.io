@@ -10,7 +10,20 @@ import Image from "next/image";
 import { useShoppingCart } from "use-shopping-cart"
 
 export default function ShoppingCartModal() {
-    const {cartCount, shouldDisplayCart, handleCartClick, cartDetails, removeItem, totalPrice} = useShoppingCart();
+    const {cartCount, shouldDisplayCart, handleCartClick, cartDetails, removeItem, totalPrice, redirectToCheckout} = useShoppingCart();
+
+    async function handleCheckoutClick(event: any) {
+        event.preventDefault()
+        try{
+            const result = await redirectToCheckout();
+            if(result?.error) {
+                console.log("result");
+            }
+        } catch(error) {
+            console.log(error);
+        }
+    }
+
     return(
         <Sheet open={ shouldDisplayCart } onOpenChange={() => handleCartClick()}>
             <SheetContent className="sm:max-w-lg w-[90vw]">
@@ -77,7 +90,7 @@ export default function ShoppingCartModal() {
                         </p>
 
                         <div className="mt-6">
-                            <Button className="w-full">
+                            <Button className="w-full" onClick={handleCheckoutClick}>
                                 Checkout
                             </Button>
                         </div>
@@ -97,4 +110,8 @@ export default function ShoppingCartModal() {
             </SheetContent>
         </Sheet>
     )
+}
+
+function redirectToCheckout() {
+    throw new Error("Function not implemented.");
 }
