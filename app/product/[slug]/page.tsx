@@ -1,4 +1,5 @@
 import AddToBag from "@/app/components/AddToBag";
+import CheckoutNow from "@/app/components/CheckoutNow";
 import ImageGallery from "@/app/components/imageGallery";
 import { fullProduct } from "@/app/interface";
 import { Button } from "@/components/ui/button";
@@ -20,6 +21,8 @@ async function getData(slug: string) {
       const data = await client.fetch(query);
       return data;
 }
+
+export const dynamic = 'force-dynamic';
 
 export default async function ProductPage({params}: {params: {slug: string}}) {
     const data: fullProduct = await getData(params.slug)
@@ -70,6 +73,15 @@ export default async function ProductPage({params}: {params: {slug: string}}) {
 
                         <div className="flex gap-2.5">
                             <AddToBag 
+                                currency="IDR"
+                                description={data.description}
+                                image={data.images[0]}
+                                name={data.name}
+                                price={data.price}
+                                key={data._id}
+                                price_id={data.price_id}
+                            />
+                            <CheckoutNow 
                                 currency="IDR"
                                 description={data.description}
                                 image={data.images[0]}
